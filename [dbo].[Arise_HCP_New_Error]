@@ -1,0 +1,91 @@
+USE [ZSJ_ODS]
+GO
+
+/****** Object:  View [dbo].[Arise_HCP_New_Error]    Script Date: 2025/9/3 11:26:10 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE VIEW [dbo].[Arise_HCP_New_Error] AS 
+SELECT 
+'Arise' AS Source
+,A.AccountID  AS SourceID
+,'API Error' AS Channel
+,A.AccounName  AS Name
+,A.Additional_Fk1  AS HosID
+,A.OrgName AS HosName
+,A.Specialty3  AS Department
+,A.Specialty2  AS StandardDepartment
+,A.Specialty1  AS AbbottDepartment
+,NULL AS [Expertise]
+,A.Title  AS Position
+,NULL AS Job
+,A.Position_Title AS [AdministrativeLevel]
+,A.Academic_Title_CN  AS AcademicTitle
+,A.Gender  AS Gender
+,A.[Person_Type__pc] AS [LicenseType]
+,NULL AS [Extend1]
+,NULL AS [Extend2]
+,NULL AS [Extend3]
+,NULL AS [Extend4]
+,NULL AS [Extend5]
+,NULL AS [SyncTime]
+,NULL AS [BatchNumber]
+,NULL AS [HCPCode]
+,A.AccountStatus AS [Status]
+,NULL AS [Reason]
+,A.[RepeatHCPCode] AS [RepeatHCPCode]
+,A.[ErrorMessage] AS [ErrorMessage]
+FROM [ZSJ_ODS].[ariseStg].[Client_List] A
+WHERE ISNULL(A.[ErrorMessage],'')<>'' 
+UNION ALL
+SELECT [Source]
+      ,[SourceID]
+      ,'Manual Error' AS [Channel]
+      ,[Name]
+      ,[HosID]
+      ,NULL AS [HosName]
+      ,[Department]
+      ,[StandardDepartment]
+      ,[AbbottDepartment]
+      ,[Expertise]
+      ,[Position]
+      ,[Job]
+      ,[AdministrativeLevel]
+      ,[AcademicTitle]
+      ,[Gender]
+      ,[LicenseType]
+      ,[Extend1]
+      ,[Extend2]
+      ,[Extend3]
+      ,[Extend4]
+      ,[Extend5]
+      ,[SyncTime]
+      ,[BatchNumber]
+      ,[HCPCode]
+      ,[Status]
+      ,[Reason]
+      ,[RepeatHCPCode]
+      ,[ErrorMessage]
+  FROM [ariseStg].[HCP] A 
+  WHERE ISNULL(A.[ErrorMessage],'')<>'' 
+
+GO
+
+
