@@ -1,0 +1,22 @@
+USE [ZSJ_ODS]
+GO
+
+/****** Object:  View [dbo].[Arise_DCR_Error]    Script Date: 2025/9/3 10:53:33 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+create view [dbo].[Arise_DCR_Error]
+AS 
+SELECT 
+Source,
+SourceID,
+HCPCode,
+ErrorMessage
+FROM 
+ariseStg.DCR_Error
+GO
+
+
