@@ -1,0 +1,80 @@
+USE [ZSJ_ODS]
+GO
+
+/****** Object:  View [dbo].[Arise_HCP_DCR_Veeva]    Script Date: 2025/9/3 10:56:18 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+
+
+
+
+
+
+
+
+/****** Script for SelectTopNRows command from SSMS  ******/
+CREATE  VIEW [dbo].[Arise_HCP_DCR_Veeva] AS 
+SELECT  
+[DataSource]
+,[SourceId]
+,[HCPCode]
+,[DCRNumber]
+,[BatchNo]
+,[Name_Updated]
+,[HCOCode_Updated]
+,[HosName_Updated]
+,[Department_Updated]
+,B.[Specialty_EN] AS [AbbottDepartment_Updated]--是英文
+,CASE [Gender_Updated] WHEN N'男' THEN 'Male' WHEN N'女' THEN 'Female' END AS [Gender_Updated]
+,[Position_Updated]
+,[AdministrativeLevel_updated]
+,[AcademicTitle_Updated]
+,[Status_Updated]
+,[DCRUser]
+,[DCRUserManager]
+,[ActiveHCPCode_Veeva]
+,[NID_Veeva]
+,[Repeat_Current_Veeva]
+,[Repeat_His_Veeva]
+,[Status_Veeva]
+,[Reason_Veeva]
+,[HCPVID_Veeva]
+,[Name_Veeva]
+,CASE [Gender_Veeva] WHEN N'男' THEN 'Male' WHEN N'女' THEN 'Female' END AS [Gender_Veeva]
+,[HCOVID_Veeva]
+,[HCOName_Veeva]
+,[StandardDepartment_Veeva]
+,[Department_Veeva]
+,[Expertise_Veeva]
+,[Position_Veeva]
+,[CustomerPosition_Veeva]
+,[Job_Veeva]--Job数据返回到AdministrativeLevel上面
+,[AcademicTitle_Veeva]
+,C.[LicenseType_EN] AS [Type_Veeva]
+,[LicenseID_Veeva]
+,[SubscriptionIndex_Veeva]
+,[LicensedPlace_Veeva]
+,[DepartmentinHCOSource_Veeva]
+,[BatchNo_Veeva]
+,CONCAT('CN',[AriseHCOID_Veeva]) AS [AriseHCOID_Veeva]
+,[PositionSource_Veeva]
+,[RepeatHCPCode_Veeva]
+,[IsVerifyToHCO_Veeva]
+,[ActionTime_Veeva]
+,[IsSupport_Veeva]
+,[ValidateType]
+,[ActionTime]
+FROM [ZSJ_ODS].[VeevaStg].[DCR] A
+LEFT JOIN (SELECT * FROM [ZSJ_ODS].[dbo].[Dictionary_Specialty] WHERE [Type]=N'雅培标准科室') B ON A.[AbbottDepartment_Updated]=B.[Specialty_CN]
+LEFT JOIN [ZSJ_ODS].[dbo].[Dictionary_LicenseType] C ON A.[Type_Veeva]=C.[LicenseType_CN]
+
+
+GO
+
+
